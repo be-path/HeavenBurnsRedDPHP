@@ -1,0 +1,434 @@
+{
+  "preset_info": {
+    "version": 11,
+    "title": "Heaven Burns Red DPHP",
+    "description": "Heaven Burns Red の DP, HP ゲージ風のバッテリーインジケーターです",
+    "author": "Nal",
+    "width": 678,
+    "height": 237,
+    "features": "",
+    "release": 357121814,
+    "locked": false,
+    "pflags": 0
+  },
+  "preset_root": {
+    "internal_events": [
+      {
+        "action": "KUSTOM_ACTION"
+      }
+    ],
+    "internal_type": "RootLayerModule",
+    "globals_list": {
+      "chp0": {
+        "index": 3,
+        "type": "COLOR",
+        "title": "chp0",
+        "value": "#FF8E4686"
+      },
+      "chp50": {
+        "index": 4,
+        "type": "COLOR",
+        "title": "chp50",
+        "value": "#FFE95CDF"
+      },
+      "chp100": {
+        "index": 5,
+        "type": "COLOR",
+        "title": "chp100",
+        "value": "#FFFFFFFF"
+      },
+      "cdp0": {
+        "index": 6,
+        "type": "COLOR",
+        "title": "cdp0",
+        "value": "#FF4B94AB"
+      },
+      "cdp50": {
+        "index": 7,
+        "type": "COLOR",
+        "title": "cdp50",
+        "value": "#FF00C4FF"
+      },
+      "cdp100": {
+        "index": 8,
+        "type": "COLOR",
+        "title": "cdp100",
+        "value": "#FFFFFFFF"
+      },
+      "cbk": {
+        "index": 9,
+        "type": "COLOR",
+        "title": "cbk",
+        "value": "#FF1E1E1E"
+      },
+      "nhpmax": {
+        "index": 2,
+        "type": "NUMBER",
+        "title": "nhpmax",
+        "min": 1,
+        "max": 10000,
+        "value": 1000.0
+      },
+      "ndpmax": {
+        "index": 1,
+        "type": "NUMBER",
+        "title": "ndpmax",
+        "min": 1,
+        "max": 10000,
+        "value": 2000.0
+      },
+      "nhpr": {
+        "index": 12,
+        "type": "TEXT",
+        "title": "nhpr",
+        "value": "$mu(max, 0, mu(min, 1, (gv(nhpmax) + gv(ndpmax)) * bi(level)/100 / gv(nhpmax)))$"
+      },
+      "ndpr": {
+        "index": 13,
+        "type": "TEXT",
+        "title": "ndpr",
+        "value": "$mu(max, 0, mu(min, 1, ((gv(nhpmax) + gv(ndpmax)) * bi(level)/100 - gv(nhpmax))/ gv(ndpmax)))$"
+      },
+      "ndpw": {
+        "index": 14,
+        "type": "NUMBER",
+        "title": "ndpw",
+        "min": 0,
+        "max": 1000,
+        "value": 95.0
+      },
+      "nhpw": {
+        "index": 15,
+        "type": "NUMBER",
+        "title": "nhpw",
+        "min": 0,
+        "max": 1000,
+        "value": 200.0
+      },
+      "clow": {
+        "index": 10,
+        "type": "COLOR",
+        "title": "clow",
+        "value": "#FFD52838"
+      },
+      "chigh": {
+        "index": 11,
+        "type": "COLOR",
+        "title": "chigh",
+        "value": "#FFFFFFFF"
+      },
+      "nlowth": {
+        "index": 16,
+        "type": "NUMBER",
+        "title": "nlowth",
+        "min": 0,
+        "max": 1,
+        "value": 0.4
+      }
+    },
+    "viewgroup_items": [
+      {
+        "internal_type": "OverlapLayerModule",
+        "viewgroup_items": [
+          {
+            "internal_type": "OverlapLayerModule",
+            "position_anchor": "CENTERRIGHT",
+            "position_padding_bottom": 14.0,
+            "viewgroup_items": [
+              {
+                "internal_type": "ShapeModule",
+                "shape_type": "RECT",
+                "shape_width": 106.0,
+                "shape_height": 28.0,
+                "shape_corners": 7.0,
+                "paint_color": "#98000000"
+              },
+              {
+                "internal_type": "TextModule",
+                "text_expression": "$if(gv(ndpr) > 0, DP, HP)$",
+                "text_family": "kfile://org.kustom.provider/fonts/Autobahn Pro Regular.ttf",
+                "text_size": 19.0,
+                "position_anchor": "BOTTOMLEFT",
+                "position_padding_left": 4.0,
+                "position_padding_bottom": 4.0
+              },
+              {
+                "internal_type": "TextModule",
+                "text_expression": "$mu(round, if(gv(ndpr)>0, gv(ndpr) * gv(ndpmax), gv(nhpr) * gv(nhpmax)))$",
+                "text_family": "kfile://org.kustom.provider/fonts/Autobahn Pro Regular.ttf",
+                "text_size": 28.0,
+                "position_anchor": "BOTTOMRIGHT",
+                "position_padding_right": 2.0,
+                "internal_toggles": {
+                  "paint_color": 10
+                },
+                "internal_formulas": {
+                  "paint_color": "$if(gv(ndpr) > 0, if(gv(ndpr) > gv(nlowth), gv(chigh), gv(clow)),if(gv(nhpr) > gv(nlowth), gv(chigh), gv(clow)))$"
+                }
+              }
+            ]
+          },
+          {
+            "internal_type": "OverlapLayerModule",
+            "internal_title": "HPバー",
+            "position_padding_top": 20.0,
+            "viewgroup_items": [
+              {
+                "internal_type": "ShapeModule",
+                "internal_title": "バー背景",
+                "shape_type": "RECT",
+                "shape_width": 200.0,
+                "shape_height": 12.0,
+                "shape_corners": 5.0,
+                "internal_toggles": {
+                  "shape_width": 100
+                },
+                "internal_globals": {
+                  "shape_width": "nhpw"
+                }
+              },
+              {
+                "internal_type": "OverlapLayerModule",
+                "viewgroup_items": [
+                  {
+                    "internal_type": "ShapeModule",
+                    "internal_title": "マスク",
+                    "shape_type": "RECT",
+                    "shape_width": 196.0,
+                    "shape_height": 8.0,
+                    "shape_corners": 3.0,
+                    "fx_mask": "CLIP_ALL",
+                    "internal_toggles": {
+                      "shape_width": 10
+                    },
+                    "internal_formulas": {
+                      "shape_width": "$gv(nhpw) - 4$"
+                    }
+                  },
+                  {
+                    "internal_type": "ShapeModule",
+                    "internal_title": "背景",
+                    "internal_toggles": {
+                      "paint_color": 100,
+                      "shape_width": 100
+                    },
+                    "internal_globals": {
+                      "paint_color": "cbk",
+                      "shape_width": "nhpw"
+                    },
+                    "shape_type": "RECT",
+                    "shape_width": 200.0,
+                    "shape_height": 12.0
+                  },
+                  {
+                    "internal_type": "OverlapLayerModule",
+                    "viewgroup_items": [
+                      {
+                        "internal_type": "ShapeModule",
+                        "internal_title": "マスク",
+                        "internal_toggles": {
+                          "shape_width": 10
+                        },
+                        "internal_formulas": {
+                          "shape_width": "$gv(nhpw)*gv(nhpr)$"
+                        },
+                        "shape_type": "RECT",
+                        "shape_width": 200.0,
+                        "shape_height": 12.0,
+                        "fx_mask": "CLIP_ALL",
+                        "position_anchor": "CENTERLEFT"
+                      },
+                      {
+                        "internal_type": "StackLayerModule",
+                        "config_stacking": "HORIZONTAL_CENTER",
+                        "internal_title": "グラデーション",
+                        "viewgroup_items": [
+                          {
+                            "internal_type": "ShapeModule",
+                            "shape_type": "RECT",
+                            "shape_width": 100.0,
+                            "shape_height": 12.0,
+                            "paint_color": "#FF000000",
+                            "fx_gradient": "HORIZONTAL",
+                            "fx_gradient_color": "#FFFFFFFF",
+                            "internal_toggles": {
+                              "paint_color": 100,
+                              "fx_gradient_color": 100,
+                              "shape_width": 10
+                            },
+                            "internal_globals": {
+                              "paint_color": "chp0",
+                              "fx_gradient_color": "chp50"
+                            },
+                            "internal_formulas": {
+                              "shape_width": "$gv(nhpw) / 2$"
+                            }
+                          },
+                          {
+                            "internal_type": "ShapeModule",
+                            "shape_type": "RECT",
+                            "shape_width": 100.0,
+                            "shape_height": 12.0,
+                            "paint_color": "#FFDF5CB5",
+                            "fx_gradient": "HORIZONTAL",
+                            "fx_gradient_color": "#FFFFFFFF",
+                            "internal_toggles": {
+                              "paint_color": 100,
+                              "fx_gradient_color": 100,
+                              "shape_width": 10
+                            },
+                            "internal_formulas": {
+                              "paint_color": "$gv(chp50)$",
+                              "shape_width": "$gv(nhpw) / 2$"
+                            },
+                            "internal_globals": {
+                              "fx_gradient_color": "chp100",
+                              "paint_color": "chp50"
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "internal_type": "OverlapLayerModule",
+            "internal_title": "DPバー",
+            "position_anchor": "CENTERLEFT",
+            "position_padding_top": 6.0,
+            "internal_toggles": {
+              "config_visible": 10
+            },
+            "internal_formulas": {
+              "config_visible": "$if(gv(ndpr) > 0, ALWAYS, NEVER)$"
+            },
+            "viewgroup_items": [
+              {
+                "internal_type": "ShapeModule",
+                "internal_title": "バー背景",
+                "shape_type": "RECT",
+                "shape_width": 90.0,
+                "shape_height": 12.0,
+                "shape_corners": 5.0,
+                "internal_toggles": {
+                  "shape_width": 100
+                },
+                "internal_globals": {
+                  "shape_width": "ndpw"
+                }
+              },
+              {
+                "internal_type": "OverlapLayerModule",
+                "viewgroup_items": [
+                  {
+                    "internal_type": "ShapeModule",
+                    "internal_title": "マスク",
+                    "shape_type": "RECT",
+                    "shape_width": 86.0,
+                    "shape_height": 8.0,
+                    "shape_corners": 3.0,
+                    "fx_mask": "CLIP_ALL",
+                    "internal_toggles": {
+                      "shape_width": 10
+                    },
+                    "internal_formulas": {
+                      "shape_width": "$gv(ndpw) - 4$"
+                    }
+                  },
+                  {
+                    "internal_type": "ShapeModule",
+                    "internal_title": "背景",
+                    "internal_toggles": {
+                      "paint_color": 100,
+                      "shape_width": 100
+                    },
+                    "internal_globals": {
+                      "paint_color": "cbk",
+                      "shape_width": "ndpw"
+                    },
+                    "shape_type": "RECT",
+                    "shape_width": 90.0,
+                    "shape_height": 12.0
+                  },
+                  {
+                    "internal_type": "OverlapLayerModule",
+                    "viewgroup_items": [
+                      {
+                        "internal_type": "ShapeModule",
+                        "internal_title": "マスク",
+                        "internal_toggles": {
+                          "shape_width": 10
+                        },
+                        "internal_formulas": {
+                          "shape_width": "$gv(ndpw)*gv(ndpr)$"
+                        },
+                        "shape_type": "RECT",
+                        "shape_width": 200.0,
+                        "shape_height": 12.0,
+                        "fx_mask": "CLIP_ALL",
+                        "position_anchor": "CENTERLEFT"
+                      },
+                      {
+                        "internal_type": "StackLayerModule",
+                        "config_stacking": "HORIZONTAL_CENTER",
+                        "internal_title": "グラデーション",
+                        "viewgroup_items": [
+                          {
+                            "internal_type": "ShapeModule",
+                            "shape_type": "RECT",
+                            "shape_width": 45.0,
+                            "shape_height": 12.0,
+                            "paint_color": "#FF000000",
+                            "fx_gradient": "HORIZONTAL",
+                            "fx_gradient_color": "#FFFFFFFF",
+                            "internal_toggles": {
+                              "paint_color": 100,
+                              "fx_gradient_color": 100,
+                              "shape_width": 10
+                            },
+                            "internal_globals": {
+                              "paint_color": "cdp0",
+                              "fx_gradient_color": "cdp50"
+                            },
+                            "internal_formulas": {
+                              "shape_width": "$gv(ndpw) / 2$"
+                            }
+                          },
+                          {
+                            "internal_type": "ShapeModule",
+                            "shape_type": "RECT",
+                            "shape_width": 45.0,
+                            "shape_height": 12.0,
+                            "paint_color": "#FFDF5CB5",
+                            "fx_gradient": "HORIZONTAL",
+                            "fx_gradient_color": "#FFFFFFFF",
+                            "internal_toggles": {
+                              "paint_color": 100,
+                              "fx_gradient_color": 100,
+                              "shape_width": 10
+                            },
+                            "internal_formulas": {
+                              "paint_color": "$gv(chp50)$",
+                              "shape_width": "$gv(ndpw) / 2$"
+                            },
+                            "internal_globals": {
+                              "fx_gradient_color": "cdp100",
+                              "paint_color": "cdp50"
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
